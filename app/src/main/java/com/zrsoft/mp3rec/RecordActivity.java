@@ -48,6 +48,25 @@ public class RecordActivity extends Activity{
             }
         });
 
+        findViewById(R.id.goon).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mRecorder.restoreRecording();
+            }
+        });
+
+        findViewById(R.id.playing).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mRecorder.startPlaying(mRecorder.getRecorderPath());
+            }
+        });
+        findViewById(R.id.unplaying).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mRecorder.stopPlaying();
+            }
+        });
         mRecorder = new RecorderAndPlayUtil();
 
         mRecorder.getRecorder().setHandle(new Handler() {

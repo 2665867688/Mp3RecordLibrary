@@ -3,16 +3,13 @@ package com.zrsoft.mp3rec.utils;
 import java.io.IOException;
 
 
-
 import android.media.MediaPlayer;
 
 import com.zrsoft.mp3rec.lame.MP3Recorder;
 
 
 /**
- *
  * @author zhaoyangyang
- *
  */
 public class RecorderAndPlayUtil {
 
@@ -49,11 +46,17 @@ public class RecorderAndPlayUtil {
         mRecorder.stop();
     }
 
-    public void pauseRecording(){
+    public void pauseRecording() {
         mRecorder.pause();
     }
+
+    public void restoreRecording() {
+        mRecorder.restore();
+    }
+
     /**
      * 开始播放录音文件
+     *
      * @param filePath
      */
     public void startPlaying(String filePath) {
