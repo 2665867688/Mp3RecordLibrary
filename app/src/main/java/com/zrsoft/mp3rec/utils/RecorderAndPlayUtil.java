@@ -3,7 +3,9 @@ package com.zrsoft.mp3rec.utils;
 import java.io.IOException;
 
 
+import android.content.Context;
 import android.media.MediaPlayer;
+import android.net.Uri;
 
 import com.zrsoft.mp3rec.lame.MP3Recorder;
 
@@ -32,10 +34,18 @@ public class RecorderAndPlayUtil {
     private MediaPlayer mPlayer = null;
     private String mPlayingPath = null;
     private MP3Recorder mRecorder = null;
+    private Uri uri = null;
+    private Context context = null;
 
     public RecorderAndPlayUtil() {
         mPlayer = new MediaPlayer();
         mRecorder = new MP3Recorder();
+    }
+    public RecorderAndPlayUtil(Context context, Uri uri){
+        this.uri = uri;
+        this.context = context;
+        mPlayer = new MediaPlayer();
+        mRecorder = new MP3Recorder(context,uri);
     }
 
     public void startRecording() {
