@@ -27,7 +27,7 @@
         android:id="@+id/intent_complete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/play_bt"
+        android:layout_above="@id/intent_bt"
         android:text="完成状态" />
 
     <LinearLayout
