@@ -23,6 +23,12 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/play_bt"
         android:text="录吧" />
+    <Button
+        android:id="@+id/intent_complete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/play_bt"
+        android:text="完成状态" />
 
     <LinearLayout
         android:id="@+id/recorder_layout"

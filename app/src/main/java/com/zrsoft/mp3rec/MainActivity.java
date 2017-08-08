@@ -42,6 +42,13 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        findViewById(R.id.intent_complete).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,CompleteActivity.class));
+            }
+        });
+
         Button btnIntent = (Button) findViewById(R.id.intent_bt);
         btnIntent.setOnClickListener(new OnClickListener() {
 
