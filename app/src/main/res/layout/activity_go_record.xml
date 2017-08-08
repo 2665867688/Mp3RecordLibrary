@@ -8,6 +8,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:layout_marginBottom="100dp"
         android:text="录" />
 
     <LinearLayout
@@ -20,13 +21,14 @@
             android:id="@+id/btn_control"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="3dp"
+            android:layout_marginBottom="5dp"
             android:text="开始" />
 
         <Button
             android:id="@+id/btn_save"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
             android:text="保存" />
 
         <Button
