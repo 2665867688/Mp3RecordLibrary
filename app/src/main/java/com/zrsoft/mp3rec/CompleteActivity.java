@@ -15,7 +15,8 @@ public class CompleteActivity extends AppCompatActivity {
         findViewById(R.id.btn_record).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(CompleteActivity.this,GoRecordActivity.class));
+                Intent intent = new Intent(CompleteActivity.this,GoRecordActivity.class);
+                startActivity(intent);
             }
         });
     }
