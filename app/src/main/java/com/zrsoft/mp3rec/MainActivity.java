@@ -47,11 +47,9 @@ public class MainActivity extends Activity {
 
             @Override
             public void onClick(View v) {
-//                startActivity(new Intent(MainActivity.this,RecordActivity.class));
+                startActivity(new Intent(MainActivity.this, RecordActivity.class));
             }
         });
-
-
 
 
         mRecorderLayout = (LinearLayout) findViewById(R.id.recorder_layout);

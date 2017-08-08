@@ -41,7 +41,12 @@ public class RecordActivity extends Activity{
                 mRecorder.stopRecording();
             }
         });
-
+        findViewById(R.id.puase).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mRecorder.pauseRecording();
+            }
+        });
 
         mRecorder = new RecorderAndPlayUtil();
 

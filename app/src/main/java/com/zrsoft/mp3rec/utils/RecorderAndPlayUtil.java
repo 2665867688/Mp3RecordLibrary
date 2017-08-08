@@ -49,6 +49,13 @@ public class RecorderAndPlayUtil {
         mRecorder.stop();
     }
 
+    public void pauseRecording(){
+        mRecorder.pause();
+    }
+    /**
+     * 开始播放录音文件
+     * @param filePath
+     */
     public void startPlaying(String filePath) {
         if (filePath == null) {
             return;
@@ -85,6 +92,9 @@ public class RecorderAndPlayUtil {
         }
     }
 
+    /**
+     * 停止播放
+     */
     public void stopPlaying() {
         if (mPlayer != null) {
             if (mPlayer.isPlaying()) {

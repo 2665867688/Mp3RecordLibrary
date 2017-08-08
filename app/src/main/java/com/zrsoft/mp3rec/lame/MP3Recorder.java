@@ -273,17 +273,17 @@ public class MP3Recorder {
     /**
      * 录音状态管理
      *
-     * @see RecMicToMp3#MSG_REC_STARTED
-     * @see RecMicToMp3#MSG_REC_STOPPED
-     * @see RecMicToMp3#MSG_REC_PAUSE
-     * @see RecMicToMp3#MSG_REC_RESTORE
-     * @see RecMicToMp3#MSG_ERROR_GET_MIN_BUFFERSIZE
-     * @see RecMicToMp3#MSG_ERROR_CREATE_FILE
-     * @see RecMicToMp3#MSG_ERROR_REC_START
-     * @see RecMicToMp3#MSG_ERROR_AUDIO_RECORD
-     * @see RecMicToMp3#MSG_ERROR_AUDIO_ENCODE
-     * @see RecMicToMp3#MSG_ERROR_WRITE_FILE
-     * @see RecMicToMp3#MSG_ERROR_CLOSE_FILE
+     * @see MP3Recorder#MSG_REC_STARTED
+     * @see MP3Recorder#MSG_REC_STOPPED
+     * @see MP3Recorder#MSG_REC_PAUSE
+     * @see MP3Recorder#MSG_REC_RESTORE
+     * @see MP3Recorder#MSG_ERROR_GET_MIN_BUFFERSIZE
+     * @see MP3Recorder#MSG_ERROR_CREATE_FILE
+     * @see MP3Recorder#MSG_ERROR_REC_START
+     * @see MP3Recorder#MSG_ERROR_AUDIO_RECORD
+     * @see MP3Recorder#MSG_ERROR_AUDIO_ENCODE
+     * @see MP3Recorder#MSG_ERROR_WRITE_FILE
+     * @see MP3Recorder#MSG_ERROR_CLOSE_FILE
      */
     public void setHandle(Handler handler) {
         this.handler = handler;
