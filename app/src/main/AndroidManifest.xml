@@ -19,7 +19,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".RecordActivity" />
-        <activity android:name=".CompleteActivity"></activity>
+        <activity android:name=".CompleteActivity" />
+        <activity android:name=".GoRecordActivity"></activity>
     </application>
 
 </manifest>
