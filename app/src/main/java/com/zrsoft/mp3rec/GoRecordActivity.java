@@ -92,7 +92,6 @@ public class GoRecordActivity extends AppCompatActivity implements View.OnClickL
                 ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(GoRecordActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO}, 1);
         }
-
     }
 
 
