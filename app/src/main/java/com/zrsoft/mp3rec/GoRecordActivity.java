@@ -78,7 +78,7 @@ public class GoRecordActivity extends AppCompatActivity implements View.OnClickL
         tvTimeShow = (TextView) findViewById(R.id.tv_show_time);
         Intent intentService = new Intent(this,RecordService.class);
         intentService.putExtra(MediaStore.EXTRA_OUTPUT,uri);
-        intentService.putExtra(RECORD_ISNOTIFICATION,true);
+        intentService.putExtra(RECORD_ISNOTIFICATION,false);
         startService(intentService);
         bindService(intentService, connection, BIND_AUTO_CREATE); // 绑定服务
         if (ContextCompat.checkSelfPermission(GoRecordActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
