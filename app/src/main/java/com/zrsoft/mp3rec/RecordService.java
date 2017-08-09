@@ -56,6 +56,7 @@ public class RecordService extends Service {
             mRecorder = new RecorderAndPlayUtil(RecordService.this, uri);
             mRecorder.getRecorder().setHandle(handler);
             mRecorder.startRecording();
+            timer = new Timer();
             timer.schedule(new RecTimerTask(), 0, 1000);
             startForeground(1, getNotification("录音", 0));
         }

@@ -103,9 +103,10 @@ public class GoRecordActivity extends AppCompatActivity implements View.OnClickL
             //保存录音 取消前台通知
             state = 0;
             binder.saveRecord();
-            Toast.makeText(this, "舍弃录音", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "保存录音", Toast.LENGTH_SHORT).show();
         } else if (i == R.id.btn_give_up) {
             //舍弃 将录音文件删除掉 取消前台通知
+            Toast.makeText(this, "舍弃录音", Toast.LENGTH_SHORT).show();
             state = 0;
             binder.giveUp();
             btnControl.setText("开始");
