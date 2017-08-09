@@ -2,9 +2,12 @@ package com.zrsoft.mp3rec;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+
+import com.zrsoft.mp3rec.utils.OutCallRecordActivity;
 
 public class CompleteActivity extends AppCompatActivity {
 
@@ -17,6 +20,14 @@ public class CompleteActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(CompleteActivity.this,GoRecordActivity.class);
                 startActivity(intent);
+            }
+        });
+        findViewById(R.id.btn_out_record).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CompleteActivity.this,OutCallRecordActivity.class);
+//                intent.putExtra(MediaStore.EXTRA_OUTPUT,)
+                startActivityForResult(intent,101);
             }
         });
     }

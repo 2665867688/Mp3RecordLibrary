@@ -14,4 +14,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="去录音"/>
+    <Button
+        android:id="@+id/btn_out_record"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="外部调用录音"/>
 </LinearLayout>
