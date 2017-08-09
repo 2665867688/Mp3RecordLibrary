@@ -15,10 +15,14 @@ import android.os.Message;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -68,7 +72,7 @@ public class GoRecordActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_go_record);
         uri = getIntent().getParcelableExtra(MediaStore.EXTRA_OUTPUT);
-        isNotification = getIntent().getBooleanExtra(NOTIFICATION_SERVICE,true);
+        isNotification = getIntent().getBooleanExtra(NOTIFICATION_SERVICE, true);
 
         btnControl = (Button) findViewById(R.id.btn_control);
         btnControl.setOnClickListener(this);
@@ -78,14 +82,14 @@ public class GoRecordActivity extends AppCompatActivity implements View.OnClickL
         btnGiveUp.setOnClickListener(this);
         tvTimeShow = (TextView) findViewById(R.id.tv_show_time);
         //启动service
-        Intent intentService = new Intent(this,RecordService.class);
-        intentService.putExtra(MediaStore.EXTRA_OUTPUT,uri);
-        intentService.putExtra(RECORD_ISNOTIFICATION,false);
+        Intent intentService = new Intent(this, RecordService.class);
+        intentService.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+        intentService.putExtra(RECORD_ISNOTIFICATION, false);
         startService(intentService);
         bindService(intentService, connection, BIND_AUTO_CREATE); // 绑定服务
         //获取录音权限
         if (ContextCompat.checkSelfPermission(GoRecordActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(GoRecordActivity.this, new String[]{ Manifest.permission. WRITE_EXTERNAL_STORAGE }, 1);
+            ActivityCompat.requestPermissions(GoRecordActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
         }
     }
 
@@ -108,6 +112,7 @@ public class GoRecordActivity extends AppCompatActivity implements View.OnClickL
                 state = 1;
             }
         } else if (i == R.id.btn_save) {
+            showDialog();
             //保存录音 取消前台通知
             state = 0;
             binder.saveRecord();
@@ -123,20 +128,28 @@ public class GoRecordActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
+    private void showDialog() {
+        View view = LayoutInflater.from(this).inflate(R.layout.dialog_record_select, null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog dialog = builder.create();
+        dialog.setView(view);
+        Window window = dialog.getWindow();
+        window.setGravity(Gravity.BOTTOM);  //此处可以设置dialog显示的位置
+//        window.setWindowAnimations(R.style.mystyle);  //添加动画
+        dialog.show();
+    }
 
     RecordService.OnRecordListener onRecordListener = new RecordService.OnRecordListener() {
         @Override
         public void recordTime(long time) {
-            tvTimeShow.setText(RecordHelpUtil.misToTime(time*1000));
+            tvTimeShow.setText(RecordHelpUtil.misToTime(time * 1000));
         }
     };
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-
-        return super.onKeyDown(keyCode, event);
+        return false;
     }
-
 
 
     @Override
@@ -154,14 +167,15 @@ public class GoRecordActivity extends AppCompatActivity implements View.OnClickL
 
     /**
      * 使用此方法启动此activity
+     *
      * @param context
      * @param uri
      * @param isNotification
      */
-    public static void startThisContext(Context context,Uri uri, boolean isNotification){
+    public static void startThisContext(Context context, Uri uri, boolean isNotification) {
         Intent intent = new Intent(context, GoRecordActivity.class);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT,uri);
-        intent.putExtra(NOTIFICATION_SERVICE,isNotification);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+        intent.putExtra(NOTIFICATION_SERVICE, isNotification);
         context.startActivity(intent);
     }
 
@@ -169,7 +183,7 @@ public class GoRecordActivity extends AppCompatActivity implements View.OnClickL
     protected void onDestroy() {
         super.onDestroy();
         unbindService(connection);
-        Intent intentService = new Intent(this,RecordService.class);
+        Intent intentService = new Intent(this, RecordService.class);
         stopService(intentService);
     }
 }
