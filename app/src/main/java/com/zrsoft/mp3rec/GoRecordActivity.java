@@ -87,7 +87,7 @@ public class GoRecordActivity extends AppCompatActivity implements View.OnClickL
         int i = v.getId();
         if (i == R.id.btn_control) {
             if (state == 0) {
-                binder.startRecord();
+                binder.startRecord(uri);
                 btnControl.setText("暂停");
                 state = 1;
             } else if (state == 1) {
@@ -101,10 +101,12 @@ public class GoRecordActivity extends AppCompatActivity implements View.OnClickL
             }
         } else if (i == R.id.btn_save) {
             //保存录音 取消前台通知
+            state = 0;
             binder.saveRecord();
             Toast.makeText(this, "舍弃录音", Toast.LENGTH_SHORT).show();
         } else if (i == R.id.btn_give_up) {
             //舍弃 将录音文件删除掉 取消前台通知
+            state = 0;
             binder.giveUp();
             btnControl.setText("开始");
             tvTimeShow.setText("录音");

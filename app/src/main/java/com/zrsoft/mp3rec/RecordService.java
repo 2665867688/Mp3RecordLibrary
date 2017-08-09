@@ -42,17 +42,7 @@ public class RecordService extends Service {
     public RecordService() {
     }
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
 
-    }
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        uri = intent.getParcelableExtra(MediaStore.EXTRA_OUTPUT);
-        return super.onStartCommand(intent, flags, startId);
-    }
 
     @Nullable
     @Override
@@ -61,7 +51,8 @@ public class RecordService extends Service {
     }
 
     class RecordBinder extends Binder {
-        public void startRecord() {
+        public void startRecord(Uri uri) {
+            mRecorder = null;
             mRecorder = new RecorderAndPlayUtil(RecordService.this, uri);
             mRecorder.getRecorder().setHandle(handler);
             mRecorder.startRecording();
