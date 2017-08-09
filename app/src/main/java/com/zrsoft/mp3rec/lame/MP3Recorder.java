@@ -19,7 +19,7 @@ import android.os.Handler;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 
-import com.zrsoft.mp3rec.utils.StorageUtil;
+import com.zrsoft.mp3rec.utils.RecordHelpUtil;
 
 public class MP3Recorder {
 
@@ -110,14 +110,14 @@ public class MP3Recorder {
             @Override
             public void run() {
                 if (uri == null) {
-                    String fileDir = StorageUtil.getSDPath() + "LameMP3/Voice/";
+                    String fileDir = RecordHelpUtil.getSDPath() + "LameMP3/Voice/";
 
                     File dir = new File(fileDir);
                     if (!dir.exists()) {
                         dir.mkdirs();
                     }
 
-                    mFilePath = StorageUtil.getSDPath() + "LameMP3/Voice/"
+                    mFilePath = RecordHelpUtil.getSDPath() + "LameMP3/Voice/"
                             + System.currentTimeMillis() + ".mp3";
                 } else {
                     mFilePath = getPath(context, uri);

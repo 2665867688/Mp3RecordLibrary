@@ -1,13 +1,14 @@
 package com.zrsoft.mp3rec.utils;
 
-import java.security.PublicKey;
-
 import android.os.Environment;
 import android.util.Log;
 
-public class StorageUtil {
+import java.text.SimpleDateFormat;
+import java.util.TimeZone;
 
-    private static String TAG = StorageUtil.class.getName();
+public class RecordHelpUtil {
+
+    private static String TAG = RecordHelpUtil.class.getName();
 
     /**
      * SD卡是否正常
@@ -30,6 +31,12 @@ public class StorageUtil {
         }else{
             return null;
         }
+    }
 
+    public static String misToTime(long mis){
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+        formatter.setTimeZone(TimeZone.getTimeZone("GMT+00:00"));
+        String hms = formatter.format(mis);
+        return hms;
     }
 }

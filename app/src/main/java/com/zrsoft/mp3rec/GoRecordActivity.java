@@ -76,11 +76,13 @@ public class GoRecordActivity extends AppCompatActivity implements View.OnClickL
         btnGiveUp = (Button) findViewById(R.id.btn_give_up);
         btnGiveUp.setOnClickListener(this);
         tvTimeShow = (TextView) findViewById(R.id.tv_show_time);
+        //启动service
         Intent intentService = new Intent(this,RecordService.class);
         intentService.putExtra(MediaStore.EXTRA_OUTPUT,uri);
         intentService.putExtra(RECORD_ISNOTIFICATION,false);
         startService(intentService);
         bindService(intentService, connection, BIND_AUTO_CREATE); // 绑定服务
+        //获取录音权限
         if (ContextCompat.checkSelfPermission(GoRecordActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(GoRecordActivity.this, new String[]{ Manifest.permission. WRITE_EXTERNAL_STORAGE }, 1);
         }
