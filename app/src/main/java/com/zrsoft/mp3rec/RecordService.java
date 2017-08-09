@@ -28,7 +28,11 @@ import java.util.TimerTask;
  * @ClassName:录音server
  * @author: shimy
  * @date: 2017/8/9 0009 上午 8:41
- * @description:
+ * @description: 调用此service需要传进来的参数
+ * @param  intent.getBooleanExtra(GoRecordActivity.RECORD_ISNOTIFICATION, false);
+ * @param  intent.getParcelableExtra(MediaStore.EXTRA_OUTPUT);
+ * @description 如需此service更新activity界面 请设置向此service设置回调setOnRecordListener
+ * 需要先利用此service的binder获取此service实例
  */
 public class RecordService extends Service {
 
@@ -111,6 +115,10 @@ public class RecordService extends Service {
         }
     }
 
+    /**
+     * 前台通知的设置
+     * @return
+     */
     private NotificationManager getNotificationManager() {
         return (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
     }
