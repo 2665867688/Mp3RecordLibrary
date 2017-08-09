@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zrsoft.mp3rec.lame.MP3Recorder;
+import com.zrsoft.mp3rec.utils.RecordHelpUtil;
 import com.zrsoft.mp3rec.utils.RecorderAndPlayUtil;
 
 import java.io.File;
@@ -125,8 +126,8 @@ public class GoRecordActivity extends AppCompatActivity implements View.OnClickL
 
     RecordService.OnRecordListener onRecordListener = new RecordService.OnRecordListener() {
         @Override
-        public void recordTime(String time) {
-            tvTimeShow.setText(time);
+        public void recordTime(long time) {
+            tvTimeShow.setText(RecordHelpUtil.misToTime(time*1000));
         }
     };
 

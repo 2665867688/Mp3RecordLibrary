@@ -18,6 +18,7 @@ import android.support.v4.app.NotificationCompat;
 import android.widget.Toast;
 
 import com.zrsoft.mp3rec.lame.MP3Recorder;
+import com.zrsoft.mp3rec.utils.RecordHelpUtil;
 import com.zrsoft.mp3rec.utils.RecorderAndPlayUtil;
 
 import java.io.File;
@@ -89,7 +90,7 @@ public class RecordService extends Service {
             //保存录音 取消前台通知
             timer.cancel();
             time = 0;
-            onRecordListener.recordTime("录音");
+            onRecordListener.recordTime(0);
             mRecorder.stopRecording();//停止并保存录音
             if (isNotification) {
                 getNotificationManager().cancel(1);
@@ -131,7 +132,8 @@ public class RecordService extends Service {
         builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));
         builder.setContentIntent(pi);
         builder.setContentTitle("录音");
-        builder.setContentText(timer + "");
+        //将毫秒转换成时分秒显示在通知栏上
+        builder.setContentText(RecordHelpUtil.misToTime(timer*1000));
         return builder.build();
     }
 
@@ -152,7 +154,7 @@ public class RecordService extends Service {
             switch (msg.what) {
                 case MSG_TIME://时间改变
                     time++;
-                    onRecordListener.recordTime(time + "");
+                    onRecordListener.recordTime(time);
                     if (isNotification) {
                         getNotificationManager().notify(1, getNotification("录音", time));
                     }
@@ -218,6 +220,6 @@ public class RecordService extends Service {
     }
 
     public interface OnRecordListener {
-        void recordTime(String time);
+        void recordTime(long time);
     }
 }
