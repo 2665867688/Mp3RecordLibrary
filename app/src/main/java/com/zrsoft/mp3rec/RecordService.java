@@ -84,6 +84,7 @@ public class RecordService extends Service {
             //保存录音 取消前台通知
             timer.cancel();
             time = 0;
+            onRecordListener.recordTime("录音");
             mRecorder.stopRecording();//停止并保存录音
             getNotificationManager().cancel(1);
             stopForeground(true);
