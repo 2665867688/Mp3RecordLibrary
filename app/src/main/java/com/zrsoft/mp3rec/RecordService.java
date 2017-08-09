@@ -51,8 +51,6 @@ public class RecordService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         uri = intent.getParcelableExtra(MediaStore.EXTRA_OUTPUT);
-        mRecorder = new RecorderAndPlayUtil(this, uri);
-        mRecorder.getRecorder().setHandle(handler);
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -64,6 +62,8 @@ public class RecordService extends Service {
 
     class RecordBinder extends Binder {
         public void startRecord() {
+            mRecorder = new RecorderAndPlayUtil(RecordService.this, uri);
+            mRecorder.getRecorder().setHandle(handler);
             mRecorder.startRecording();
             timer.schedule(new RecTimerTask(), 0, 1000);
             startForeground(1, getNotification("录音", 0));
@@ -83,6 +83,7 @@ public class RecordService extends Service {
         public void saveRecord() {
             //保存录音 取消前台通知
             timer.cancel();
+            time = 0;
             mRecorder.stopRecording();//停止并保存录音
             getNotificationManager().cancel(1);
             stopForeground(true);
@@ -90,6 +91,8 @@ public class RecordService extends Service {
 
         public void giveUp() {
             //舍弃 将录音文件删除掉 取消前台通知
+            timer.cancel();
+            time = 0;
             File file = new File(mRecorder.getRecorderPath());
             file.delete();
             getNotificationManager().cancel(1);
@@ -135,7 +138,7 @@ public class RecordService extends Service {
                 case MSG_TIME://时间改变
                     time++;
                     onRecordListener.recordTime(time + "");
-                    getNotificationManager().notify(1,getNotification("录音",time));
+                    getNotificationManager().notify(1, getNotification("录音", time));
                     break;
                 case MP3Recorder.MSG_REC_STARTED:
                     // 开始录音
