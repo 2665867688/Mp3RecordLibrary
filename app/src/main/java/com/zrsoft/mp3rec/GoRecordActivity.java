@@ -1,6 +1,7 @@
 package com.zrsoft.mp3rec;
 
 import android.Manifest;
+import android.annotation.TargetApi;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.ComponentName;
@@ -8,7 +9,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
@@ -129,6 +132,7 @@ public class GoRecordActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     private void showDialog() {
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_record_select, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -136,7 +140,9 @@ public class GoRecordActivity extends AppCompatActivity implements View.OnClickL
         dialog.setView(view);
         Window window = dialog.getWindow();
         window.setGravity(Gravity.BOTTOM);  //此处可以设置dialog显示的位置
-//        window.setWindowAnimations(R.style.mystyle);  //添加动画
+        window.setBackgroundDrawable(new ColorDrawable(0x00000000));
+        window.setDimAmount(0.3f);
+        window.setWindowAnimations(R.style.DialogRecordTheme);  //添加动画
         dialog.show();
     }
 
