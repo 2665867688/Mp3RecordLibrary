@@ -20,7 +20,14 @@
         </activity>
         <activity android:name=".RecordActivity" />
         <activity android:name=".CompleteActivity" />
-        <activity android:name=".GoRecordActivity"></activity>
+        <activity
+            android:name=".GoRecordActivity"
+            android:launchMode="singleInstance" />
+
+        <service
+            android:name=".RecordService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>
