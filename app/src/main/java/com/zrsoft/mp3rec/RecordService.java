@@ -37,12 +37,19 @@ public class RecordService extends Service {
     private long time;
     private Uri uri;
     private RecorderAndPlayUtil mRecorder = null;
+    private boolean isNotification = false;//是否开启前台通知
 
 
     public RecordService() {
     }
 
 
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        isNotification = intent.getBooleanExtra(GoRecordActivity.RECORD_ISNOTIFICATION, false);
+        uri = intent.getParcelableExtra(MediaStore.EXTRA_OUTPUT);
+        return super.onStartCommand(intent, flags, startId);
+    }
 
     @Nullable
     @Override
@@ -51,14 +58,16 @@ public class RecordService extends Service {
     }
 
     class RecordBinder extends Binder {
-        public void startRecord(Uri uri) {
+        public void startRecord() {
             mRecorder = null;
             mRecorder = new RecorderAndPlayUtil(RecordService.this, uri);
             mRecorder.getRecorder().setHandle(handler);
             mRecorder.startRecording();
             timer = new Timer();
             timer.schedule(new RecTimerTask(), 0, 1000);
-            startForeground(1, getNotification("录音", 0));
+            if (isNotification) {
+                startForeground(1, getNotification("录音", 0));
+            }
         }
 
         public void pauseRecord() {
@@ -78,8 +87,11 @@ public class RecordService extends Service {
             time = 0;
             onRecordListener.recordTime("录音");
             mRecorder.stopRecording();//停止并保存录音
-            getNotificationManager().cancel(1);
-            stopForeground(true);
+            if (isNotification) {
+                getNotificationManager().cancel(1);
+                stopForeground(true);
+            }
+
         }
 
         public void giveUp() {
@@ -88,8 +100,10 @@ public class RecordService extends Service {
             time = 0;
             File file = new File(mRecorder.getRecorderPath());
             file.delete();
-            getNotificationManager().cancel(1);
-            stopForeground(true);
+            if (isNotification) {
+                getNotificationManager().cancel(1);
+                stopForeground(true);
+            }
         }
 
         public RecordService getRecordService() {
@@ -131,7 +145,9 @@ public class RecordService extends Service {
                 case MSG_TIME://时间改变
                     time++;
                     onRecordListener.recordTime(time + "");
-                    getNotificationManager().notify(1, getNotification("录音", time));
+                    if (isNotification) {
+                        getNotificationManager().notify(1, getNotification("录音", time));
+                    }
                     break;
                 case MP3Recorder.MSG_REC_STARTED:
                     // 开始录音

@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
@@ -34,7 +35,7 @@ import java.util.TimerTask;
  * @ClassName:GoRecordActivity
  * @author: shimy
  * @date: 2017/8/8 0008 下午 3:47
- * @description: 录音
+ * @description: 录音 启动此activity需要传递两个参数 uri和isnotification(boolean)
  */
 public class GoRecordActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -44,7 +45,9 @@ public class GoRecordActivity extends AppCompatActivity implements View.OnClickL
     private TextView tvTimeShow;
     private Uri uri;
     private int state = 0;//0：开始 1：播放中 2：暂停
-
+    //是否开启前台通知
+    public static final String RECORD_ISNOTIFICATION = "RECORD_ISNOTIFICATION";
+    private boolean isNotification = false;//是否开启前台通知
     private RecordService.RecordBinder binder;
     private ServiceConnection connection = new ServiceConnection() {
         @Override
@@ -64,6 +67,7 @@ public class GoRecordActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_go_record);
         uri = getIntent().getParcelableExtra(MediaStore.EXTRA_OUTPUT);
+        isNotification = getIntent().getBooleanExtra(NOTIFICATION_SERVICE,true);
 
         btnControl = (Button) findViewById(R.id.btn_control);
         btnControl.setOnClickListener(this);
@@ -74,6 +78,7 @@ public class GoRecordActivity extends AppCompatActivity implements View.OnClickL
         tvTimeShow = (TextView) findViewById(R.id.tv_show_time);
         Intent intentService = new Intent(this,RecordService.class);
         intentService.putExtra(MediaStore.EXTRA_OUTPUT,uri);
+        intentService.putExtra(RECORD_ISNOTIFICATION,true);
         startService(intentService);
         bindService(intentService, connection, BIND_AUTO_CREATE); // 绑定服务
         if (ContextCompat.checkSelfPermission(GoRecordActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -87,7 +92,7 @@ public class GoRecordActivity extends AppCompatActivity implements View.OnClickL
         int i = v.getId();
         if (i == R.id.btn_control) {
             if (state == 0) {
-                binder.startRecord(uri);
+                binder.startRecord();
                 btnControl.setText("暂停");
                 state = 1;
             } else if (state == 1) {
@@ -144,4 +149,24 @@ public class GoRecordActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
+    /**
+     * 使用此方法启动此activity
+     * @param context
+     * @param uri
+     * @param isNotification
+     */
+    public static void startThisContext(Context context,Uri uri, boolean isNotification){
+        Intent intent = new Intent(context, GoRecordActivity.class);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT,uri);
+        intent.putExtra(NOTIFICATION_SERVICE,isNotification);
+        context.startActivity(intent);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unbindService(connection);
+        Intent intentService = new Intent(this,RecordService.class);
+        stopService(intentService);
+    }
 }
