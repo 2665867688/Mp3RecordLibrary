@@ -87,10 +87,12 @@ public class GoRecordActivity extends AppCompatActivity implements View.OnClickL
         intentService.putExtra(RECORD_ISNOTIFICATION, false);
         startService(intentService);
         bindService(intentService, connection, BIND_AUTO_CREATE); // 绑定服务
-        //获取录音权限
-        if (ContextCompat.checkSelfPermission(GoRecordActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(GoRecordActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+        //获取文件写入权限
+        if (ContextCompat.checkSelfPermission(GoRecordActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(GoRecordActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO}, 1);
         }
+
     }
 
 
@@ -161,6 +163,7 @@ public class GoRecordActivity extends AppCompatActivity implements View.OnClickL
                     finish();
                 }
                 break;
+
             default:
         }
     }
