@@ -155,6 +155,13 @@ public class GoRecordActivity extends AppCompatActivity implements View.OnClickL
                 if (position == 0) {//使用此录音
                     Intent intent = new Intent();
                     //将传回来的uri返回
+                    Uri resultUri;
+                    if (uri == null) {
+                        resultUri = Uri.fromFile(new File(binder.getRecorderAndPlayUtil().getRecorderPath()));
+                    } else {
+                        resultUri = uri;
+                    }
+                    intent.setData(resultUri);
                     setResult(RESULT_OK, intent);
                     finish();
                 } else if (position == 1) {//重新录
@@ -215,7 +222,7 @@ public class GoRecordActivity extends AppCompatActivity implements View.OnClickL
         Intent intent = new Intent(context, GoRecordActivity.class);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
         intent.putExtra(NOTIFICATION_SERVICE, isNotification);
-        context.startActivityForResult(intent,requestCode);
+        context.startActivityForResult(intent, requestCode);
     }
 
     @Override
