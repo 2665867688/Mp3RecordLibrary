@@ -2,6 +2,7 @@ package com.zrsoft.mp3rec;
 
 import android.Manifest;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.ComponentName;
@@ -210,11 +211,11 @@ public class GoRecordActivity extends AppCompatActivity implements View.OnClickL
      * @param uri
      * @param isNotification
      */
-    public static void startThisContext(Context context, Uri uri, boolean isNotification) {
+    public static void startThisContext(Activity context, Uri uri, boolean isNotification, int requestCode) {
         Intent intent = new Intent(context, GoRecordActivity.class);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
         intent.putExtra(NOTIFICATION_SERVICE, isNotification);
-        context.startActivity(intent);
+        context.startActivityForResult(intent,requestCode);
     }
 
     @Override
