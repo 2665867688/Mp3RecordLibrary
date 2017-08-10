@@ -25,8 +25,11 @@ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,6 +60,8 @@ public class GoRecordActivity extends AppCompatActivity implements View.OnClickL
     public static final String RECORD_ISNOTIFICATION = "RECORD_ISNOTIFICATION";
     private boolean isNotification = false;//是否开启前台通知
     private RecordService.RecordBinder binder;
+    //录音选择
+    private String[] recordSelects = {"使用此录音", "重新录音", "放弃"};
     private ServiceConnection connection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
@@ -143,6 +148,11 @@ public class GoRecordActivity extends AppCompatActivity implements View.OnClickL
         window.setBackgroundDrawable(new ColorDrawable(0x00000000));
         window.setDimAmount(0.3f);
         window.setWindowAnimations(R.style.DialogRecordTheme);  //添加动画
+
+        TextView tvName = (TextView) view.findViewById(R.id.tv_record_name);
+        ListView lvSelect = (ListView) view.findViewById(R.id.lv_record_save_select);
+        lvSelect.setAdapter(new RecordSelectAdapter());
+
         dialog.show();
     }
 
@@ -193,5 +203,47 @@ public class GoRecordActivity extends AppCompatActivity implements View.OnClickL
         unbindService(connection);
         Intent intentService = new Intent(this, RecordService.class);
         stopService(intentService);
+    }
+
+
+    class RecordSelectAdapter extends BaseAdapter {
+
+        @Override
+        public int getCount() {
+            return recordSelects == null ? 0 : recordSelects.length;
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            ViewHolder viewHolder;
+            if (convertView == null) {
+                convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_dialog_record, parent, false);
+                viewHolder = new ViewHolder(convertView);
+                convertView.setTag(viewHolder);
+            } else {
+                viewHolder = (ViewHolder) convertView.getTag();
+            }
+
+            viewHolder.tvTagName.setText(recordSelects[position]);
+            return convertView;
+        }
+
+        private class ViewHolder {
+            TextView tvTagName;
+
+            public ViewHolder(View converView) {
+                tvTagName = (TextView) converView.findViewById(R.id.tv_record_selecttag);
+            }
+        }
     }
 }
