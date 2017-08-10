@@ -27,6 +27,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -128,12 +129,7 @@ public class GoRecordActivity extends AppCompatActivity implements View.OnClickL
 //            btnControl.setText("重新录");
 //            Toast.makeText(this, "保存录音", Toast.LENGTH_SHORT).show();
         } else if (i == R.id.btn_give_up) {
-            //舍弃 将录音文件删除掉 取消前台通知
-            Toast.makeText(this, "舍弃录音", Toast.LENGTH_SHORT).show();
-            state = 0;
-            binder.giveUp();
-            btnControl.setText("开始");
-            tvTimeShow.setText("录音");
+
         }
     }
 
@@ -151,6 +147,31 @@ public class GoRecordActivity extends AppCompatActivity implements View.OnClickL
         TextView tvName = (TextView) view.findViewById(R.id.tv_record_name);
         ListView lvSelect = (ListView) view.findViewById(R.id.lv_record_save_select);
         lvSelect.setAdapter(new RecordSelectAdapter());
+        lvSelect.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 0) {//使用此录音
+                    Intent intent = new Intent();
+                    //将传回来的uri返回
+                    setResult(RESULT_OK, intent);
+                    finish();
+                } else if (position == 1) {//重新录
+
+                } else {//舍弃录音
+                    //舍弃 将录音文件删除掉 取消前台通知
+                    Toast.makeText(GoRecordActivity.this, "舍弃录音", Toast.LENGTH_SHORT).show();
+                    state = 0;
+                    binder.giveUp();
+                    btnControl.setText("开始");
+                    tvTimeShow.setText("录音");
+//                    Intent intent = new Intent();
+                    //将传回来的uri返回
+//                    intent.putExtra(MediaStore.EXTRA_OUTPUT,uri);
+//                    setResult(RESULT_OK,intent);
+                    finish();
+                }
+            }
+        });
 
         dialog.show();
     }

@@ -1,4 +1,4 @@
-package com.zrsoft.mp3rec.utils;
+package com.zrsoft.mp3rec;
 
 import android.net.Uri;
 import android.provider.MediaStore;

@@ -1,13 +1,9 @@
 package com.zrsoft.mp3rec;
 
 import android.content.Intent;
-import android.net.Uri;
-import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-
-import com.zrsoft.mp3rec.utils.OutCallRecordActivity;
 
 public class CompleteActivity extends AppCompatActivity {
 
