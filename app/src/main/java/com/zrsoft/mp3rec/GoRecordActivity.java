@@ -148,7 +148,6 @@ public class GoRecordActivity extends AppCompatActivity implements View.OnClickL
         window.setBackgroundDrawable(new ColorDrawable(0x00000000));
         window.setDimAmount(0.3f);
         window.setWindowAnimations(R.style.DialogRecordTheme);  //添加动画
-
         TextView tvName = (TextView) view.findViewById(R.id.tv_record_name);
         ListView lvSelect = (ListView) view.findViewById(R.id.lv_record_save_select);
         lvSelect.setAdapter(new RecordSelectAdapter());
