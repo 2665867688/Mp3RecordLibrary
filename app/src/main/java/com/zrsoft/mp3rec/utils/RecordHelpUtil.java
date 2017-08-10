@@ -9,6 +9,8 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.util.Log;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.TimeZone;
 
@@ -52,6 +54,56 @@ public class RecordHelpUtil {
     }
 
 
+    /**
+     *
+     * @param context:上下文环境
+     * @param filePath:文件路径
+     * @param fileName:文件名称
+     * @param isNomedia：是否屏蔽相册读取
+     * @param provider:android 7.0以后由于文件访问被列为不安全，生成uri时使用此provider对uri进行加密处理
+     * @return
+     */
+    public static Uri getOutputMediaFileUri(Context context,String filePath,String fileName,boolean isNomedia,String provider) {
+//        if (Build.VERSION.SDK_INT < 24) {
+//            return Uri.fromFile(getOutputMediaFile(filePath,fileName,isNomedia));
+//        } else {
+//            return FileProvider.getUriForFile(context, provider, getOutputMediaFile(filePath,fileName,isNomedia));
+//        }
+        return Uri.fromFile(getOutputMediaFile(filePath,fileName,isNomedia));
+    }
+
+    /**
+     *
+     * @param filePath:文件路径
+     * @param fileName:文件名
+     * @param isNomedia:是否屏蔽相册读取
+     * @return
+     */
+    public static File getOutputMediaFile(String filePath, String fileName, boolean isNomedia) {
+        File mediaStorageDir = null;
+        try {
+            mediaStorageDir = new File(filePath);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (!mediaStorageDir.exists()) {
+            if (!mediaStorageDir.mkdirs()) {
+                // 在SD卡上创建文件夹需要权限：
+                File file = null;
+                if (isNomedia) {
+                    file = new File(mediaStorageDir.getPath() + "/.nomedia");// 用来屏蔽相册读取
+                }
+                try {
+                    file.createNewFile();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        File mediaFile = new File(mediaStorageDir.getPath() + File.separator + fileName);
+        return mediaFile;
+    }
 
     /**
      * android解决部分手机无法通过uri获取到相册的path

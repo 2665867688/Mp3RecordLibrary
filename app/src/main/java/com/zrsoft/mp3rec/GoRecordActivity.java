@@ -121,7 +121,8 @@ public class GoRecordActivity extends AppCompatActivity implements View.OnClickL
                 btnControl.setText("暂停");
                 state = 1;
             }
-        } else if (i == R.id.btn_save) {
+        } else if (i == R.id.btn_save) {//保存录音
+            binder.saveRecord();
             showDialog();
             //保存录音 取消前台通知
 //            state = 0;
@@ -156,18 +157,17 @@ public class GoRecordActivity extends AppCompatActivity implements View.OnClickL
                     setResult(RESULT_OK, intent);
                     finish();
                 } else if (position == 1) {//重新录
-
+                    state = 1;
+                    btnControl.setText("暂停");
+                    binder.giveUp();
+                    binder.startRecord();
                 } else {//舍弃录音
                     //舍弃 将录音文件删除掉 取消前台通知
                     Toast.makeText(GoRecordActivity.this, "舍弃录音", Toast.LENGTH_SHORT).show();
-                    state = 0;
+                    state = 0;//标识状态改为0
                     binder.giveUp();
-                    btnControl.setText("开始");
-                    tvTimeShow.setText("录音");
-//                    Intent intent = new Intent();
-                    //将传回来的uri返回
-//                    intent.putExtra(MediaStore.EXTRA_OUTPUT,uri);
-//                    setResult(RESULT_OK,intent);
+//                    btnControl.setText("开始");
+//                    tvTimeShow.setText("录音");
                     finish();
                 }
             }
