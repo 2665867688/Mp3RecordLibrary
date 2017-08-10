@@ -21,8 +21,7 @@
         <activity android:name=".RecordActivity" />
         <activity android:name=".CompleteActivity" />
         <activity
-            android:name=".GoRecordActivity"
-            android:launchMode="singleInstance" />
+            android:name=".GoRecordActivity" />
 
         <service
             android:name=".RecordService"
