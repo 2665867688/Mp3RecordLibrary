@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zrsoft.mp3rec.lame.MP3Recorder;
+import com.zrsoft.mp3rec.ripple.RippleTestActivity;
 import com.zrsoft.mp3rec.utils.RecorderAndPlayUtil;
 
 public class MainActivity extends Activity {
@@ -45,7 +46,7 @@ public class MainActivity extends Activity {
         findViewById(R.id.intent_complete).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,CompleteActivity.class));
+                startActivity(new Intent(MainActivity.this, CompleteActivity.class));
             }
         });
 
@@ -58,6 +59,12 @@ public class MainActivity extends Activity {
             }
         });
 
+        findViewById(R.id.bowen_bt).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, RippleTestActivity.class));
+            }
+        });
 
         mRecorderLayout = (LinearLayout) findViewById(R.id.recorder_layout);
         mShowTime = (TextView) findViewById(R.id.show_time_tv);

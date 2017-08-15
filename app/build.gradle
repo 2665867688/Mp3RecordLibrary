@@ -5,7 +5,7 @@ android {
     resourcePrefix "AndroidMP3RecorderLibrary_"    //这个随便填
     defaultConfig {
         applicationId "com.zrsoft.mp3rec"
-        minSdkVersion 9
+        minSdkVersion 11
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
