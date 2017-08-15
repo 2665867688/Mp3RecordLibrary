@@ -19,11 +19,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".RecordActivity" />
-        <activity android:name=".CompleteActivity" />
+        <activity android:name="com.zrsoft.mp3rec.CompleteActivity" />
         <activity android:name=".GoRecordActivity" />
 
         <service
-            android:name=".RecordService"
+            android:name="com.zrsoft.mp3rec.RecordService"
             android:enabled="true"
             android:exported="true" />
 
