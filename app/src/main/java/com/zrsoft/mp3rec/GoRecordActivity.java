@@ -36,6 +36,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zrsoft.mp3rec.lame.MP3Recorder;
+import com.zrsoft.mp3rec.ripple.RippleBackground;
 import com.zrsoft.mp3rec.utils.RecordHelpUtil;
 import com.zrsoft.mp3rec.utils.RecorderAndPlayUtil;
 
@@ -52,6 +53,7 @@ import java.util.TimerTask;
  */
 public class GoRecordActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private RippleBackground rippleBackground;
     private Button btnControl;
     private Button btnSave;
     private Button btnGiveUp;
@@ -84,6 +86,7 @@ public class GoRecordActivity extends AppCompatActivity implements View.OnClickL
         uri = getIntent().getParcelableExtra(MediaStore.EXTRA_OUTPUT);
         isNotification = getIntent().getBooleanExtra(NOTIFICATION_SERVICE, true);
 
+        rippleBackground = (RippleBackground) findViewById(R.id.ripple_content);
         btnControl = (Button) findViewById(R.id.btn_control);
         btnControl.setOnClickListener(this);
         btnSave = (Button) findViewById(R.id.btn_save);
@@ -113,17 +116,23 @@ public class GoRecordActivity extends AppCompatActivity implements View.OnClickL
                 binder.startRecord();
                 btnControl.setText("暂停");
                 state = 1;
+                rippleBackground.startRippleAnimation();
             } else if (state == 1) {
                 binder.pauseRecord();
                 btnControl.setText("继续");
                 state = 2;
+                rippleBackground.stopRippleAnimation();
             } else if (state == 2) {
                 binder.restoreRecord();
                 btnControl.setText("暂停");
                 state = 1;
+                rippleBackground.startRippleAnimation();
             }
         } else if (i == R.id.btn_save) {//保存录音
             binder.saveRecord();
+            if (state != 1) {
+                rippleBackground.stopRippleAnimation();
+            }
             showDialog();
             //保存录音 取消前台通知
 //            state = 0;
@@ -169,6 +178,7 @@ public class GoRecordActivity extends AppCompatActivity implements View.OnClickL
                     btnControl.setText("暂停");
                     binder.giveUp();
                     binder.startRecord();
+                    rippleBackground.startRippleAnimation();
                 } else {//舍弃录音
                     //舍弃 将录音文件删除掉 取消前台通知
                     Toast.makeText(GoRecordActivity.this, "舍弃录音", Toast.LENGTH_SHORT).show();

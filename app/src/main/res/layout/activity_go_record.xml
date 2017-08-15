@@ -1,15 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tv_show_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_marginBottom="100dp"
-        android:text="录" />
+    <com.zrsoft.mp3rec.ripple.RippleBackground
+        android:id="@+id/ripple_content"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        app:rb_color="#0099CC"
+        app:rb_duration="3000"
+        app:rb_radius="32dp"
+        app:rb_rippleAmount="6"
+        app:rb_scale="6">
+
+        <ImageView
+            android:id="@+id/ripple_centerImage"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/phone1" />
+
+        <TextView
+            android:id="@+id/tv_show_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="录" />
+    </com.zrsoft.mp3rec.ripple.RippleBackground>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -36,7 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="舍弃"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
     </LinearLayout>
 
