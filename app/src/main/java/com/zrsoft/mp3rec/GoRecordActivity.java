@@ -193,7 +193,11 @@ public class GoRecordActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        return false;
+        if (state != 0) {
+            Toast.makeText(this, "请先保存录音", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
     }
 
 
