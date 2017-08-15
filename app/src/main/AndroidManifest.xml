@@ -20,15 +20,14 @@
         </activity>
         <activity android:name=".RecordActivity" />
         <activity android:name=".CompleteActivity" />
-        <activity
-            android:name=".GoRecordActivity" />
+        <activity android:name=".GoRecordActivity" />
 
         <service
             android:name=".RecordService"
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".OutCallRecordActivity"></activity>
+        <activity android:name=".OutCallRecordActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -37,8 +36,10 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"/>
+                android:resource="@xml/file_paths" />
         </provider>
+
+        <activity android:name=".ripple.RippleTestActivity"></activity>
     </application>
 
 </manifest>
